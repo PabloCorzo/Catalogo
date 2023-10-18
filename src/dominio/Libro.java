@@ -8,8 +8,9 @@ public class Libro{
     private String fecha;
     private String genero;
     static ArrayList <Libro> libros = new ArrayList<>();
-    static HashMap <String, String> libros_autor = new HashMap<>(0, 0);
-    static HashMap <String, String> libros_genero = new HashMap<>(0, 0);
+    static HashMap <String, String> libros_autor = new HashMap<>();
+    static HashMap <String, String> libros_genero = new HashMap<>();
+    
 
     public static ArrayList <Libro> getLibros(){
         return libros;

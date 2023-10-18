@@ -27,8 +27,10 @@ public class Interfaz{
         String libro_fecha = JOptionPane.showInputDialog(null, "Introduzca la fecha del libro", "Nuevo libro", 0);
         String libro_genero = JOptionPane.showInputDialog(null, "Introduzca el genero del libro", "Nuevo libro", 0);
         String libro_nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del libro", "Nuevo libro", 0);
-        dominio.Libro.getLibros().add(new Libro(libro_nombre,libro_autor,libro_fecha,libro_genero));
-        dominio.Libro.getAutores().put(libro_nombre,libro_autor);
+        Libro.getLibros().add(new Libro(libro_nombre,libro_autor,libro_fecha,libro_genero));
+        Libro.getAutores().put(libro_nombre,libro_autor);
+        Libro.getGeneros().put(libro_nombre, libro_genero);
+        System.out.println(Libro.getAutores());
     }
     public static void mostrarAutores(){
         //filtrar arraylist libros para oranizar los autores existentes y sus libros
@@ -36,7 +38,7 @@ public class Interfaz{
     }
 
     public static void mostrarGeneros(){
-        //mostrar generos 
+        System.out.println(Libro.getGeneros()); 
         //escoger genero
     }
 }
