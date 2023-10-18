@@ -1,19 +1,36 @@
 package dominio;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Libro{
     private String nombre;
     private String autor;
-    private int fecha;
+    private String fecha;
     private String genero;
+    static ArrayList <Libro> libros = new ArrayList<>();
+    static HashMap <String, String> libros_autor = new HashMap<>(0, 0);
+    static HashMap <String, String> libros_genero = new HashMap<>(0, 0);
+
+    public static ArrayList <Libro> getLibros(){
+        return libros;
+    }
+
+    public static HashMap <String,String> getAutores(){
+        return libros_autor;
+    }
+
+    public static HashMap <String, String> getGeneros(){
+        return libros_genero;
+    }
 
 
-    public Libro(String nombre,String autor,int fecha, String genero){
+    public Libro(String nombre,String autor,String fecha, String genero){
         this.nombre = nombre;
         this.autor = autor;
         this.fecha = fecha;
         this.genero = genero;
-        libros.add(this);
+        libros_autor.put(this.nombre, this.autor);
+        libros_genero.put(this.nombre, this.genero);
     }
 
     public String toString(){
@@ -29,7 +46,7 @@ public class Libro{
         this.autor = autor;
     }
 
-    public void setFecha(int fecha){
+    public void setFecha(String fecha){
         this.fecha = fecha;
     }
 
@@ -45,7 +62,7 @@ public class Libro{
         return this.autor;
     }
 
-    public int getFecha(){
+    public String getFecha(){
         return this.fecha;
     }
 

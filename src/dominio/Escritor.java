@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class Escritor{
     private String nombre;
     ArrayList <Libro> libros_autor = new ArrayList<>();
-    ArrayList <Libro> libros = new ArrayList<>();
 
     public Escritor(String nombre, Libro libro){
         this.nombre = nombre;
@@ -25,7 +24,7 @@ public class Escritor{
 
     public String toString(){
         String res = "libros_autor del autor " + this.nombre + ": ";
-        for(Libro libro : libros){
+        for(Libro libro : Libro.getLibros()){
             res += libro.getNombre();
             if(libros_autor.indexOf(libro) == libros_autor.size() - 2){
                 res += " y ";

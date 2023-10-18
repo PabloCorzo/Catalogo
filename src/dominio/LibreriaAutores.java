@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class LibreriaAutores{
     ArrayList<Escritor> autores = new ArrayList<>();
-    
+        
     public void addAutor(Escritor autor){
         autores.add(autor);
     }
