@@ -1,7 +1,7 @@
 package aplicacion;
 import javax.swing.JOptionPane;
 
-import interfaz.Interfaz;
+import interfaz.Interface;
 
 public class Principal{
 //     public static void main(String[] args) {
@@ -15,7 +15,8 @@ public class Principal{
 //         JOptionPane.showMessageDialog(null, "kevin leonard balls", opcion_libreria, 0);
 //     }
     public static void main(String[] args) {
-        Interfaz.addLibro();    
+        Interface.exe();
+        //Interfaz.addLibro();    
         // Interfaz.mostrarGeneros();
     }
  }
