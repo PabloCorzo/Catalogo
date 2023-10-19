@@ -2,14 +2,18 @@ package dominio;
 import java.util.ArrayList;
 
 public class GenreLibrary{
-    ArrayList <Book> genres = new ArrayList<>();
-    String[] all_genres = {"filosofia","narrativa","historico","terror","biografia","ficcion"};
+    static ArrayList <Book> genres = new ArrayList<>();
+    static String[] all_genres = {"filosofia","narrativa","historico","terror","biografia","ficcion"};
     
-    public void addLibro(Book book){
+    public static String[] getGenres(){
+        return all_genres;
+    }
+
+    public static void addLibro(Book book){
         genres.add(book);
     }
 
-    public void delLibro(Book book){
+    public static void delLibro(Book book){
         genres.remove(book);
     }
 }

@@ -24,7 +24,6 @@ public class Book{
         return genres;
     }
 
-
     public Book(String name,String author,String date, String genre){
         this.name = name;
         this.author = author;
