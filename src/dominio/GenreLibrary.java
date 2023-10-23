@@ -16,4 +16,20 @@ public class GenreLibrary{
     public static void delLibro(Book book){
         genres.remove(book);
     }
+
+
+    //Como conseguir genre 
+    public String toString(String genre){
+        String res = "";
+        for(Book book: Book.getBooks() ){
+            if(book.getGenre().equalsIgnoreCase(genre)){
+                res += book.getName() + ", ";
+            }
+            else{;}
+        }
+        if(res.equalsIgnoreCase("")){
+            return "No se han encontrado libros del genero indicado";
+        }
+        return res;
+    }
 }

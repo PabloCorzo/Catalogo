@@ -1,4 +1,7 @@
 package interfaz;
+
+import java.util.Scanner;
+import java.io.File;
 import javax.swing.JOptionPane;
 import dominio.*;
 
@@ -46,6 +49,7 @@ public class Interface {
             return true;
         }
         else if(option.equalsIgnoreCase("mostrar")){
+            //mostrar n shi
             return true;
         }
         else if(option.equalsIgnoreCase("salir")){
