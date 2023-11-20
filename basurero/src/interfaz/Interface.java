@@ -1,18 +1,43 @@
 package interfaz;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.io.File;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import javax.swing.JOptionPane;
 import dominio.*;
 
-public class Interface {
-    public static boolean exe(String option){
+public class Interface implements Serializable{
+
+    ArrayList<Book> books = new ArrayList<>();
+
+    // public Interface(){
+    //     ObjectInputStream obj;
+    //     File file = new File("books.txt");
+    //     try{
+    //         obj = new ObjectInputStream(new FileInputStream(file));
+    //         books = (ArrayList<Book>)obj.readObject();
+    //         obj.close();
+    //         JOptionPane.showMessageDialog(null, "Leido");
+    //     } catch(Exception e){
+    //         JOptionPane.showMessageDialog(null, "No leido");
+    //         books = new ArrayList<>();
+    //     }
+    // }
+
+    public boolean run(String option){
         if(option.equalsIgnoreCase("editar")){
             String old_name = JOptionPane.showInputDialog(null, "Introduzca el nombre del libro a editar", "Nuevo libro", 0);
             boolean book_exists = false;
             for(Book book : Book.getBooks()){
                 if(book.getName().equalsIgnoreCase(old_name)){
                     book_exists = true;
+                    Book b = book;
                 }
             }
             if(book_exists){
@@ -29,7 +54,7 @@ public class Interface {
                 }
                 else if(val_to_edit.equalsIgnoreCase("autor")){
                     String new_author = JOptionPane.showInputDialog(null, "Introduzca el autor", "Editor", 0);
-                    Book.getAuthors().put(option, new_author);
+                    // Book.getAuthors().indexOf();
                 }
                 else if(val_to_edit.equalsIgnoreCase("genero")){
                     String new_genre = JOptionPane.showInputDialog(null, "Introduzca el genero", "Editor", 0);
@@ -40,7 +65,12 @@ public class Interface {
                         }
                     }
                     if(genre_exists){
-                        Book.getGenres().put(old_name, new_genre);
+                        for(Book book : Book.getBooks()){
+                        if(book.getName().equalsIgnoreCase(old_name)){
+                            book.setGenre(new_genre);
+                            JOptionPane.showMessageDialog(null, "Genero cambiado", "Editado correctamente", 0, null);
+                        }
+                    }
                     }
                 }
                 else{JOptionPane.showMessageDialog(null, "Metodo introducido incorrecto", "error", 0, null);}
@@ -49,10 +79,31 @@ public class Interface {
             return true;
         }
         else if(option.equalsIgnoreCase("mostrar")){
-            //mostrar n shi
+            String filter = JOptionPane.showInputDialog("Desea mostrar generos o autores?");
+            if(filter.equalsIgnoreCase("autor")|| filter.equalsIgnoreCase("autores")){
+                ArrayList <Author> authors_array = new ArrayList<>();
+                for(int i = 0; i < Book.getAuthors().size(); i++){  
+                    authors_array.add();
+                }
+            }
+            if(filter.equalsIgnoreCase("genero")|| filter.equalsIgnoreCase("generos")){
+
+            }
+            else{JOptionPane.showMessageDialog(null, "Solo se puede filtrar por generos o autores.");}
             return true;
         }
         else if(option.equalsIgnoreCase("salir")){
+            ObjectOutputStream obj;
+            File file = new File("books.txt");
+            try{
+                obj = new ObjectOutputStream(new FileOutputStream(file));
+                obj.writeObject(books);
+                obj.close();
+                JOptionPane.showMessageDialog(null, "Guardado");
+                } catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Error al guardar");
+                System.out.println(e);
+                };
             return false;
         }
         else if(option.equalsIgnoreCase("agregar")){

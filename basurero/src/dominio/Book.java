@@ -1,36 +1,56 @@
 package dominio;
 import java.util.ArrayList;
-import java.util.HashMap;
+// import java.util.HashMap;
 
 public class Book{
     private String name;
-    private String author;
+    private Author author;
     private String date;
     private String genre;
     static ArrayList <Book> books = new ArrayList<>();
-    static HashMap <String, String> authors = new HashMap<>();
-    static HashMap <String, String> genres = new HashMap<>();
+    static ArrayList <Author> authors = new ArrayList<>();
+    static ArrayList <String> genres = new ArrayList<>();
     
 
     public static ArrayList <Book> getBooks(){
         return books;
     }
 
-    public static HashMap <String,String> getAuthors(){
+    public static  ArrayList <Author>  getAuthors(){
         return authors;
     }
 
-    public static HashMap <String, String> getGenres(){
+    public static ArrayList <String>  getGenres(){
         return genres;
     }
 
     public Book(String name,String author,String date, String genre){
         this.name = name;
-        this.author = author;
+        Author auth = new Author(author,this);
+        this.author = auth;
         this.date = date;
         this.genre = genre;
-        authors.put(this.name, this.author);
-        genres.put(this.name, this.genre);
+        authors.add(this.author);
+        genres.add(this.genre);
+    }
+
+    public boolean exists(){
+        //BUGGED
+        boolean exists = false;
+        for(Book b : books){
+            if(b.name.equalsIgnoreCase(this.name)){
+                exists = true;
+
+                //Sets this equal to b (Atributes only)
+                this.author = b.author;
+                this.date = b.date;
+                this.genre = b.genre;
+                
+                //Sustitutes b for this so it can be addressed from interface
+                books.set(books.indexOf(b), this);
+            }    
+        }
+        return exists;
     }
 
     public String toString(){
@@ -43,7 +63,7 @@ public class Book{
     }
 
     public void setAuthor(String author){
-        this.author = author;
+        this.author = new Author(author, this);
     }
 
     public void setDate(String date){
@@ -58,7 +78,7 @@ public class Book{
         return this.name;
     }
 
-    public String getAuthor(){
+    public Author getAuthor(){
         return this.author;
     }
 
