@@ -7,6 +7,16 @@ public class Library {
     private static ArrayList<Book>library = new ArrayList<>();
     private static ArrayList<Author>authors = new ArrayList<>();
 
+
+    public ArrayList<Book> getBooks(){
+        return library;
+    }
+
+    public ArrayList<Author> getAuthors(){
+        return authors;
+    }
+
+
     public int addBook(Book b){
         
         if(b.exists(library)){
