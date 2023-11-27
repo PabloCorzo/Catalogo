@@ -66,7 +66,6 @@ public class Book {
         return exists;
     }
 
-
     //Returns -1 if not found
     public int getIndexIn(ArrayList<Book> array){
         int index = -1;

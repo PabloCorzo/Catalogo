@@ -11,13 +11,12 @@ public class Author{
         this.name = name;
         this.books = new ArrayList<>();
     }
-
     public String getName(){
         return this.name;
     }
 
     public String toString(){
-        String s = "El autor "  + this.name;
+        String s = this.name;
         if(this.books.size() == 0){
             s+= "  no tiene libros.";
         }
@@ -35,6 +34,10 @@ public class Author{
         return s;
     }
     
+    public int getBookAmount(){
+	return this.books.size();
+    }
+
     public ArrayList<Book> getBooks(){
         return this.books;
     }

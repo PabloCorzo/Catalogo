@@ -1,8 +1,11 @@
-package domain;
+// package domain;
 
 import java.util.ArrayList;
 
 public class Library {
+
+    //YOOOOO HOLD ON CHAT THIS CLASS MIGHT NOT BE NEEDED, I THINK WE CAN DO EVERYTHING IN INTERFACE
+    //CAN WE GET SOME TWITCH CHAT POGGERS IN THE CHAT
 
     private static ArrayList<Book>library = new ArrayList<>();
     private static ArrayList<Author>authors = new ArrayList<>();
