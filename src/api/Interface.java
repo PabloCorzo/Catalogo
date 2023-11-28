@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,27 +27,24 @@ public class Interface implements Serializable{
             obj = new ObjectInputStream(new FileInputStream(file));
             try{
                 this.library = (ArrayList<Book>)obj.readObject();
+				System.out.println("Libros leidos.");
             }catch(Exception e){
-                //SHOULD BE POP-UP
                 System.out.println("Libros no leidos.");
             }
             obj.close();
             obj = new ObjectInputStream(new FileInputStream(file2));
             try{
                 this.authors = (ArrayList<Author>)obj.readObject();
+				System.out.println("Autores leidos.");
             }catch(Exception e){
                 //SHOULD BE POP-UP
                 System.out.println("Autores no leidos.");
             }
             obj.close();
-            //SHOULD BE POP-UP
-            System.out.println("Leido.");
         }catch(Exception e){
-            //SHOULD BE POP-UP
             System.out.println("NO LEIDO: " + e);
         }
     }
-
 
     public void closeScanner(){
         this.sc.close();
@@ -70,16 +66,55 @@ public class Interface implements Serializable{
 	//HELP AND EXIT
 	if(split[0].equalsIgnoreCase("agregar") && split[1].equalsIgnoreCase("libro")){
 		//add book
+		String name = this.getInput("Nombre del libro:");
+		String author = this.getInput("Autor del libro:");
+		String date = this.getInput("Fecha del libro:");
+		String pages = this.getInput("Paginas del libro:");
+		Author a = new Author(author);
+		if(a.exists(authors)){
+			int index = a.getIndexIn(authors);
+			Book b = new Book(name,authors.get(index),date,pages);
+			library.add(b);
+			authors.get(index).addBook(b);
+			System.out.println("Libro agregado.");
+		}
+		else{
+			Book b = new Book(name,a,date,pages);
+			library.add(b);
+			a.addBook(b);
+			authors.add(a);
+			System.out.println("Autor agregado.");
+			System.out.println("Libro agregado.");
+		}
 		return 1;
 	}
 
 	else if(split[0].equalsIgnoreCase("agregar") && (split[1].equalsIgnoreCase("autor") || split[1].equalsIgnoreCase("autora"))){
 		//add author
+		String name = this.getInput("Nombre del autor:");
+		Author a = new Author(name);
+		if(a.exists(authors)){
+			System.out.println("Autor ya existe.");
+		}
+		else{
+			authors.add(a);
+			System.out.println("Autor agregado.");
+		}
 		return 1;
 	}
 
 	else if(split[0].equalsIgnoreCase("borrar") && split[1].equalsIgnoreCase("libro")){
 		//delete book
+		String name = this.getInput("Nombre del libro:");
+		Book book = new Book(name,new Author(""),"","");
+		if(book.exists(library)){
+			int index = book.getIndexIn(library);
+			library.remove(index);
+			System.out.println("Libro borrado.");
+		}
+		else{
+			System.out.println("Libro no encontrado.");
+		}
 		return 1;
 	}
 
@@ -87,7 +122,19 @@ public class Interface implements Serializable{
 		String yn = this.getInput("Si borras el autor, se borraran sus libros. Estas seguro? y/n");
 		if(yn.equalsIgnoreCase("y")){
 			//delete all of their books
-			//delete the author
+			String name = this.getInput("Nombre del autor:");
+			Author author = new Author(name);
+			if(author.exists(authors)){
+				int index = author.getIndexIn(authors);
+				for(Book b : authors.get(index).getBooks()){
+					library.remove(b);
+				}
+				authors.remove(index);
+				System.out.println("Autor borrado.");
+			}
+			else{
+				System.out.println("Autor no encontrado.");
+			}
 			return 1;
 		}
 		else{
@@ -97,7 +144,6 @@ public class Interface implements Serializable{
 	}
 	else if((split[0]).equalsIgnoreCase("editar") && (split[1].equalsIgnoreCase("libro"))){
 		//edit book
-		//choose book
 		String name = this.getInput("Que libro quieres editar?");
 		Book book = new Book(name,new Author("name"),"","");
 		if(book.exists(library)){
@@ -120,7 +166,6 @@ public class Interface implements Serializable{
 				library.get(index).setAuthor(newa);
 				}
 			}
-
 			else if(edit.equalsIgnoreCase("fecha")){
 				String newDate = this.getInput("Nueva fecha:");
 				library.get(index).setDate(newDate);
@@ -133,11 +178,23 @@ public class Interface implements Serializable{
 				System.out.println("Atributo no reconocido.");
 			}
 		}
-
+		else{
+			System.out.println("Libro no encontrado.");
+		}
 		return 1;
 	}
 	else if(split[0].equalsIgnoreCase("editar") && (split[1].equalsIgnoreCase("autor") || split[1].equalsIgnoreCase("autora"))){
 		//edit author
+		String name = this.getInput("Que autor quieres editar?");
+		Author author = new Author(name);
+		if(author.exists(authors)){
+			int index = author.getIndexIn(authors);
+				String newName = this.getInput("Nuevo nombre:");
+				authors.get(index).setName(newName);
+		}
+		else{
+			System.out.println("Autor no encontrado.");
+		}
 		return 1;
 	}
 	else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("libros")){
@@ -257,5 +314,6 @@ public class Interface implements Serializable{
 	}catch(Exception e){
 		System.out.println("NO GUARDADO: " + e);
 	}
+	this.closeScanner();
 }
 }

@@ -65,6 +65,9 @@ public class Author{
         }
         return index;
     }
+    public void setName(String name){
+        this.name = name;
+    }
 
     public void rmBook(Book b){
        if(b.exists(this.books)){
