@@ -14,7 +14,7 @@ public class Narrative extends Book{
         this.genre = genre;
     }
 
-    public void setFiction(boolean fiction){
+    public void setIsFiction(boolean fiction){
         this.fiction = fiction;
     }
 

@@ -78,6 +78,7 @@ public class Interface implements Serializable{
 		String genre = this.getInput("Genero del libro:\n1. Filosofia\n2. Narrativa\n3. Biografia\n4. Comic");
 		Author a = new Author(author);
 		if(a.exists(authors)){
+			;
 		}
 		else{
 			authors.add(a);
@@ -93,6 +94,7 @@ public class Interface implements Serializable{
 			}
 			else{
 				library.add(p);
+				authors.get(a.getIndexIn(authors)).addBook(p);
 				System.out.println("Libro agregado.");
 			}
 		}
@@ -135,12 +137,15 @@ public class Interface implements Serializable{
 				Biography b = new Biography(name,a,date,pages,subject,true);
 				library.add(b);
 				authors.get(a.getIndexIn(authors)).addBook(b);
+				System.out.println("Libro agregado.");
 			}
 			else if(isselfwritten.equalsIgnoreCase("n")){
 				Biography b = new Biography(name,a,date,pages,subject,false);
 				library.add(b);
 				authors.get(a.getIndexIn(authors)).addBook(b);
+				System.out.println("Libro agregado.");
 			}
+
 			else{
 				System.out.println("No se ha reconocido la respuesta.");
 			}
@@ -211,12 +216,11 @@ public class Interface implements Serializable{
 			else{
 				System.out.println("Autor no encontrado.");
 			}
-			return 1;
 		}
 		else{
 			System.out.println("No se ha borrado.");
-			return 1;
 		}
+		return 1;
 	}
 	else if((split[0]).equalsIgnoreCase("editar") && (split[1].equalsIgnoreCase("libro"))){
 		//edit book
@@ -233,20 +237,208 @@ public class Interface implements Serializable{
 					System.out.println("Nombre cambiado.");
 				}
 				else if(value.equalsIgnoreCase("2")){
-
-					
+					//edit author
+					String newAuthor = this.getInput("Nuevo autor:");
+					if(new Author(newAuthor).exists(authors)){
+						library.get(index).setAuthor(new Author(newAuthor));
+						System.out.println("Autor cambiado.");
+					}
+					else{
+						Author a = new Author(newAuthor);
+						library.get(index).setAuthor(a);
+						authors.add(a);
+					}
+					System.out.println("Autor cambiado.");
+				}
+				else if(value.equalsIgnoreCase("3")){
+					//edit date
+					String newDate = this.getInput("Nueva fecha:");
+					library.get(index).setDate(newDate);
+					System.out.println("Fecha cambiada.");
+				}
+				else if(value.equalsIgnoreCase("4")){
+					//edit pages
+					String newPages = this.getInput("Nuevas paginas:");
+					library.get(index).setPages(newPages);	
+					System.out.println("Paginas cambiadas.");
+				}
+				else if(value.equalsIgnoreCase("5")){
+					//edit movement
+					String newMovement = this.getInput("Nuevo movimiento:");
+					((Philosophy)library.get(index)).setMovement(newMovement);
+					System.out.println("Movimiento cambiado.");
+				}
+				else if(value.equalsIgnoreCase("6")){
+					//edit type
+					String newType = this.getInput("Nuevo tipo:");
+					((Philosophy)library.get(index)).setType(newType);
+					System.out.println("Tipo cambiado.");
+				}
+				else{
+					System.out.println("Valor no reconocido.");
 				}
 			}
+			else if(library.get(index)instanceof Narrative){
+				String value = this.getInput("que quieres editar? 1. Nombre\n2. Autor\n3. Fecha\n4. Paginas\n5. Genero\n6. ficcion/no ficcion");
+				if(value.equalsIgnoreCase("1")){
+					String newName = this.getInput("Nuevo nombre:");
+					library.get(index).setName(newName);
+					System.out.println("Nombre cambiado.");
+				}
+				else if(value.equalsIgnoreCase("2")){
+					String newAuthor = this.getInput("Nuevo autor:");
+					if(new Author(newAuthor).exists(authors)){
+						library.get(index).setAuthor(new Author(newAuthor));
+						System.out.println("Autor cambiado.");
+					}
+					else{
+						Author a = new Author(newAuthor);
+						library.get(index).setAuthor(a);
+						authors.add(a);
+					}
+					System.out.println("Autor cambiado.");
+				}
+				else if(value.equalsIgnoreCase("3")){
+					String newDate = this.getInput("Nueva fecha:");
+					library.get(index).setDate(newDate);
+					System.out.println("Fecha cambiada.");
+				}
+				else if(value.equalsIgnoreCase("4")){
+					String newPages = this.getInput("Nuevas paginas:");
+					library.get(index).setPages(newPages);
+					System.out.println("Paginas cambiadas.");
+				}
+				else if(value.equalsIgnoreCase("5")){
+					String newGenre = this.getInput("Nuevo genero:");
+					((Narrative)library.get(index)).setGenre(newGenre);
+					System.out.println("Genero cambiado.");
+				}
+				else if(value.equalsIgnoreCase("6")){
+					String newIsfiction = this.getInput("Es ficcion? y/n");
+					if(newIsfiction.equalsIgnoreCase("y")){
+						((Narrative)library.get(index)).setIsFiction(true);
+						System.out.println("Ficcion cambiada.");
+					}
+					else if(newIsfiction.equalsIgnoreCase("n")){
+						((Narrative)library.get(index)).setIsFiction(false);
+						System.out.println("Ficcion cambiada.");
+					}
+					else{
+						System.out.println("No se ha reconocido la respuesta.");
+					}
+				}
+				else{
+					System.out.println("Valor no reconocido.");
+				}
+			}
+			else if(library.get(index)instanceof Biography){
+				String value = this.getInput("que quieres editar? 1. Nombre\n2. Autor\n3. Fecha\n4. Paginas\n5. Sujeto\n6. Autoescrito");
+				if(value.equalsIgnoreCase("1")){
+					String newName = this.getInput("Nuevo nombre:");
+					library.get(index).setName(newName);
+					System.out.println("Nombre cambiado.");
+				}
+				else if(value.equalsIgnoreCase("2")){
+					String newAuthor = this.getInput("Nuevo autor:");
+					if(new Author(newAuthor).exists(authors)){
+						library.get(index).setAuthor(new Author(newAuthor));
+						System.out.println("Autor cambiado.");
+					}
+					else{
+						Author a = new Author(newAuthor);
+						library.get(index).setAuthor(a);
+						authors.add(a);
+					}
+					System.out.println("Autor cambiado.");
+				}
+				else if(value.equalsIgnoreCase("3")){
+					String newDate = this.getInput("Nueva fecha:");
+					library.get(index).setDate(newDate);
+					System.out.println("Fecha cambiada.");
+				}
+				else if(value.equalsIgnoreCase("4")){
+					String newPages = this.getInput("Nuevas paginas:");
+					library.get(index).setPages(newPages);
+					System.out.println("Paginas cambiadas.");
+				}
+				else if(value.equalsIgnoreCase("5")){
+					String newSubject = this.getInput("Nuevo sujeto:");
+					((Biography)library.get(index)).setSubject(newSubject);
+					System.out.println("Sujeto cambiado.");
+				}
+				else if(value.equalsIgnoreCase("6")){
+					String newIsselfwritten = this.getInput("Es autoescrito? y/n");
+					if(newIsselfwritten.equalsIgnoreCase("y")){
+						((Biography)library.get(index)).setIsSelfWritten(true);
+						System.out.println("Autoescrito cambiado.");
+					}
+					else if(newIsselfwritten.equalsIgnoreCase("n")){
+						((Biography)library.get(index)).setIsSelfWritten(false);
+						System.out.println("Autoescrito cambiado.");
+					}
+					else{
+						System.out.println("No se ha reconocido la respuesta.");
+					}
+				}
+				else{
+					System.out.println("Valor no reconocido.");
+				}
+			}
+			else if(library.get(index)instanceof Comic){
+				String value = this.getInput("que quieres editar? 1. Nombre\n2. Autor\n3. Fecha\n4. Paginas\n5. Ilustrador\n6. Serie");
+				if(value.equalsIgnoreCase("1")){
+					String newName = this.getInput("Nuevo nombre:");
+					library.get(index).setName(newName);
+					System.out.println("Nombre cambiado.");
+				}
+				else if(value.equalsIgnoreCase("2")){
+					String newAuthor = this.getInput("Nuevo autor:");
+					if(new Author(newAuthor).exists(authors)){
+						library.get(index).setAuthor(new Author(newAuthor));
+						System.out.println("Autor cambiado.");
+					}
+					else{
+						Author a = new Author(newAuthor);
+						library.get(index).setAuthor(a);
+						authors.add(a);
+					}
+					System.out.println("Autor cambiado.");
+				}
+				else if(value.equalsIgnoreCase("3")){
+					String newDate = this.getInput("Nueva fecha:");
+					library.get(index).setDate(newDate);
+					System.out.println("Fecha cambiada.");
+				}
+				else if(value.equalsIgnoreCase("4")){
+					String newPages = this.getInput("Nuevas paginas:");
+					library.get(index).setPages(newPages);
+					System.out.println("Paginas cambiadas.");
+				}
+				else if(value.equalsIgnoreCase("5")){
+					String newIllustrator = this.getInput("Nuevo ilustrador:");
+					((Comic)library.get(index)).setIllustrator(newIllustrator);
+					System.out.println("Ilustrador cambiado.");
+				}
+				else if(value.equalsIgnoreCase("6")){
+					String newSeries = this.getInput("Nueva serie:");
+					((Comic)library.get(index)).setSeries(newSeries);
+					System.out.println("Serie cambiada.");
+				}
+				else{
+					System.out.println("Valor no reconocido.");
+				}
+			}
+			
 		}
 		else{
 			System.out.println("Libro no encontrado.");
 		}
-		return 1;
-	}
+	return 1;
+}
 	else if(split[0].equalsIgnoreCase("editar") && (split[1].equalsIgnoreCase("autor") || split[1].equalsIgnoreCase("autora"))){
 		//edit author
-		String name = this.getInput("Que autor quieres editar?");
-		Author author = new Author(name);
+		String authorname = this.getInput("Que autor quieres editar?");
+		Author author = new Author(authorname);
 		if(author.exists(authors)){
 			int index = author.getIndexIn(authors);
 				String newName = this.getInput("Nuevo nombre:");
@@ -321,42 +513,40 @@ public class Interface implements Serializable{
 			System.out.println("Categoria no reconocida.");
 			return 1;
 		}
+	
+}
+
+else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("autores")){
+	//show all authors, with the option to choose one to show their designated books
+	for(Author a : authors){
+		System.out.println(a.getName() + ", ");
 	}
-	else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("autores")){
-		//show all authors, with the option to choose one to show their designated books
-		for(Author a : authors){
-			System.out.println(a.toString());
-			System.out.println("");
-		}
-		String name = this.getInput("que autor quieres ver?");
-		Author author = new Author(name);
-		if(author.exists(authors)){
-			int index = author.getIndexIn(authors);
-			for(Book b : authors.get(index).getBooks()){
-				System.out.println(b.toString());
-				System.out.println("");
-			}
-		}
-		else{
-			System.out.println("Autor no encontrado.");
-		}
-		return 1;
-	}
-	else if(split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("ayuda")){
-		//help
-		//show all commands
-		System.out.println("Comandos: \n1. Agregar libro\n2. Agregar autor\n3. Borrar libro\n4. Borrar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar autores\n9. Ayuda\n10. Salir");
-		return 1;
-	}
-	else if(split[0].equalsIgnoreCase("salir") || split[0].equalsIgnoreCase("quit")){
-		//exit
-		this.save();
-		return 0;
+	String chosen_author = this.getInput("que autor quieres ver?");
+	Author author = new Author(chosen_author);
+	if(author.exists(authors)){
+		int index = author.getIndexIn(authors);
+		System.out.println(authors.get(index).toString());
 	}
 	else{
-		System.out.println("Comando no reconocido.");
-		return 1;
+		System.out.println("Autor no encontrado.");
 	}
+	return 1;
+}
+else if(split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("ayuda")){
+	//help
+	//show all commands
+	System.out.println("Comandos: \n1. Agregar libro\n2. Agregar autor\n3. Borrar libro\n4. Borrar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar autores\n9. Ayuda\n10. Salir");
+	return 1;
+}
+else if(split[0].equalsIgnoreCase("salir") || split[0].equalsIgnoreCase("quit")){
+	//exit
+	this.save();
+	return 0;
+}
+else{
+	System.out.println("Comando no reconocido.");
+	return 1;
+}
 }
 	public void save(){
 		//serialize library and authors

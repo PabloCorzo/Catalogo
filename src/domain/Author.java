@@ -24,12 +24,7 @@ public class Author implements Serializable{
         else{
             s+=" tiene "+ this.books.size() + " libros: ";
             for(Book b: books){
-                if(books.indexOf(b) < (books.size()-2)){
-                    s += b.getName() + ", ";
-                }
-                else if(books.indexOf(b) == (books.size()-2)){
-                    s += b.getName() + " y " + books.get(books.size()-1).getName();
-                }
+                s+= b.getName() + ", ";
             }
         }
         return s;

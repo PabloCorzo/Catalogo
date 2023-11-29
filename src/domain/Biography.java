@@ -15,7 +15,7 @@ public class Biography extends Book{
         this.subject = subject;
     }
 
-    public void setSelfWritten(boolean selfwritten){
+    public void setIsSelfWritten(boolean selfwritten){
         this.selfwritten = selfwritten;
     }
 
