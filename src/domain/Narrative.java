@@ -24,16 +24,16 @@ public class Narrative extends Book{
 
     public String getFiction(){
         if(this.fiction){
-            return "Es ficcion";
+            return " es ficcion";
         }
 
         else{
-            return "No ficcion";
+            return " no es ficcion";
         }
     }
 
     public String toString(){
-        return this.getName() + ", escrito por " + this.getAuthorName() + " en " + this.getDate() + " " + this.getFiction() +" tiene " + this.getPages() + " paginas.";
+        return this.getName() + ", escrito por " + this.getAuthorName() + " en " + this.getDate() + " de genero "+this.getGenre() + this.getFiction() +" y tiene " + this.getPages() + " paginas.";
     }
 
 }

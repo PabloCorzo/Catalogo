@@ -23,6 +23,9 @@ public class Interface implements Serializable{
         this.sc = new Scanner(System.in);
         File file = new File("books.txt");
         File file2 = new File("authors.txt");
+		if(file.exists()){
+			System.out.println("Libros encontrados.");
+		}
         try{
             obj = new ObjectInputStream(new FileInputStream(file));
             try{
@@ -49,12 +52,14 @@ public class Interface implements Serializable{
     public void closeScanner(){
         this.sc.close();
     }
-    // MIGHT NOT BE USED, BUTTONS INSTEAD
-    public String getInput(String prompt){
+
+
+	public String getInput(String prompt){
     	System.out.println(prompt);
-	String input = sc.nextLine();
-	return input;
+		String input = sc.nextLine();
+		return input;
     }
+
 
     public int chooseMethod(String input){
 	String[] split = input.split(" ");
@@ -70,21 +75,92 @@ public class Interface implements Serializable{
 		String author = this.getInput("Autor del libro:");
 		String date = this.getInput("Fecha del libro:");
 		String pages = this.getInput("Paginas del libro:");
+		String genre = this.getInput("Genero del libro:\n1. Filosofia\n2. Narrativa\n3. Biografia\n4. Comic");
 		Author a = new Author(author);
 		if(a.exists(authors)){
-			int index = a.getIndexIn(authors);
-			Book b = new Book(name,authors.get(index),date,pages);
-			library.add(b);
-			authors.get(index).addBook(b);
-			System.out.println("Libro agregado.");
 		}
 		else{
-			Book b = new Book(name,a,date,pages);
-			library.add(b);
-			a.addBook(b);
 			authors.add(a);
 			System.out.println("Autor agregado.");
-			System.out.println("Libro agregado.");
+		}
+		if(genre.equalsIgnoreCase("1")){
+			//add philosophy book
+			String movement = this.getInput("Movimiento del libro:");
+			String type = this.getInput("Tipo de libro:");
+			Philosophy p = new Philosophy(name,a,date,pages,movement,type);
+			if(p.exists(library)){
+				System.out.println("Libro ya existe.");
+			}
+			else{
+				library.add(p);
+				System.out.println("Libro agregado.");
+			}
+		}
+		else if(genre.equalsIgnoreCase("2")){
+			//add narrative book
+			String type = this.getInput("Genero narrativo del libro:");
+			String isfiction = this.getInput("Es ficcion? y/n");
+			if (isfiction.equalsIgnoreCase("y")){
+				Narrative n = new Narrative(name,a,date,pages,type,true);
+				if(n.exists(library)){
+					System.out.println("Libro ya existe.");
+				}
+				else{
+					library.add(n);
+					authors.get(a.getIndexIn(authors)).addBook(n);
+					System.out.println("Libro agregado.");
+				}
+			}
+			else if(isfiction.equalsIgnoreCase("n")){
+				Narrative n = new Narrative(name,a,date,pages,type,false);
+				if(n.exists(library)){
+					System.out.println("Libro ya existe.");
+				}
+				else{
+					library.add(n);
+					authors.get(a.getIndexIn(authors)).addBook(n);
+					System.out.println("Libro agregado.");
+				}
+			}
+			else{
+				System.out.println("No se ha reconocido la respuesta.");
+				
+			}
+		}
+		else if(genre.equalsIgnoreCase("3")){
+			//add biography book
+			String subject = this.getInput("Sujeto del libro:");
+			String isselfwritten = this.getInput("Es autoescrito? y/n");
+			if(isselfwritten.equalsIgnoreCase("y")){
+				Biography b = new Biography(name,a,date,pages,subject,true);
+				library.add(b);
+				authors.get(a.getIndexIn(authors)).addBook(b);
+			}
+			else if(isselfwritten.equalsIgnoreCase("n")){
+				Biography b = new Biography(name,a,date,pages,subject,false);
+				library.add(b);
+				authors.get(a.getIndexIn(authors)).addBook(b);
+			}
+			else{
+				System.out.println("No se ha reconocido la respuesta.");
+			}
+		}
+		else if(genre.equalsIgnoreCase("4")){
+			//add comic book
+			String illustrator = this.getInput("Ilustrador del libro:");
+			String series = this.getInput("Serie del libro:");
+			Comic c = new Comic(name,a,date,pages,illustrator,series);
+			if(c.exists(library)){
+				System.out.println("Libro ya existe.");
+			}
+			else{
+				library.add(c);
+				authors.get(a.getIndexIn(authors)).addBook(c);
+				System.out.println("Libro agregado.");
+			}
+		}
+		else{
+			System.out.println("Genero no reconocido.");
 		}
 		return 1;
 	}
@@ -148,34 +224,18 @@ public class Interface implements Serializable{
 		Book book = new Book(name,new Author("name"),"","");
 		if(book.exists(library)){
 			int index = book.getIndexIn(library);
-			String edit = this.getInput("Que quieres editar? (nombre, autor, fecha, paginas)");
-			if(edit.equalsIgnoreCase("nombre")){
-				String newName = this.getInput("Nuevo nombre:");
-				library.get(index).setName(newName);
-			}
-			else if(edit.equalsIgnoreCase("autor")){
-				String newAuthor = this.getInput("Nuevo autor (si no existe,sera creado) :");
-				Author newa = new Author(newAuthor);
-				if(newa.exists(authors)){
-					int index2 = newa.getIndexIn(authors);
-					authors.get(index2).addBook(library.get(index));
+			if(library.get(index)instanceof Philosophy){
+				//edit philosophy book
+				String value = this.getInput("que quieres editar? 1. Nombre\n2. Autor\n3. Fecha\n4. Paginas\n5. Movimiento\n6. Tipo");
+				if(value.equalsIgnoreCase("1")){
+					String newName = this.getInput("Nuevo nombre:");
+					library.get(index).setName(newName);
+					System.out.println("Nombre cambiado.");
 				}
-				else{
-					newa.addBook(library.get(index));
-					authors.add(newa);
-				library.get(index).setAuthor(newa);
+				else if(value.equalsIgnoreCase("2")){
+
+					
 				}
-			}
-			else if(edit.equalsIgnoreCase("fecha")){
-				String newDate = this.getInput("Nueva fecha:");
-				library.get(index).setDate(newDate);
-			}
-			else if(edit.equalsIgnoreCase("paginas")){
-				String newPages = this.getInput("Nuevas paginas:");
-				library.get(index).setPages(newPages);
-			}
-			else{
-				System.out.println("Atributo no reconocido.");
 			}
 		}
 		else{

@@ -1,8 +1,9 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Book {
+public class Book implements Serializable{
     //Author contains books, and all books will be stored in library, which will also store authors with their repective operations
     //include search for: if nout found, suggest to add it to the collection
 
