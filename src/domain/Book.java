@@ -45,8 +45,8 @@ public class Book implements Serializable{
         return this.author.getName();
     }
 
-    public String getAuthor(){
-        return this.author.toString();
+    public Author getAuthor(){
+        return this.author;
     }
 
     public String getDate(){

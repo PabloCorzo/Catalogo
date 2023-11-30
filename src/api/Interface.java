@@ -189,6 +189,8 @@ public class Interface implements Serializable{
 		String name = this.getInput("Nombre del libro:");
 		Book book = new Book(name,new Author(""),"","");
 		if(book.exists(library)){
+			int authorindex = library.get(book.getIndexIn(library)).getAuthor().getIndexIn(authors);
+			authors.get(authorindex).rmBook(book);
 			int index = book.getIndexIn(library);
 			library.remove(index);
 			System.out.println("Libro borrado.");
@@ -518,9 +520,11 @@ public class Interface implements Serializable{
 
 else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("autores")){
 	//show all authors, with the option to choose one to show their designated books
+	String s = "Autores: ";
 	for(Author a : authors){
-		System.out.println(a.getName() + ", ");
+		s += a.getName() + ", ";
 	}
+	System.out.println(s);
 	String chosen_author = this.getInput("que autor quieres ver?");
 	Author author = new Author(chosen_author);
 	if(author.exists(authors)){
@@ -551,15 +555,16 @@ else{
 	public void save(){
 		//serialize library and authors
 		ObjectOutputStream obj;
+		ObjectOutputStream obj2;
 		File file = new File("books.txt");
 		File file2 = new File("authors.txt");
 		try{
 			obj = new ObjectOutputStream(new FileOutputStream(file));
 			obj.writeObject(this.library);
 			obj.close();
-			obj = new ObjectOutputStream(new FileOutputStream(file2));
-			obj.writeObject(this.authors);
-			obj.close();
+			obj2 = new ObjectOutputStream(new FileOutputStream(file2));
+			obj2.writeObject(this.authors);
+			obj2.close();
 			System.out.println("Guardado.");
 	}catch(Exception e){
 		System.out.println("NO GUARDADO: " + e);
