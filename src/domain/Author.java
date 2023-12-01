@@ -8,14 +8,30 @@ public class Author implements Serializable{
     private String name;
     private ArrayList<Book>books;
 
+    /**
+     * Constructor
+     * @param name nombre
+     * construye un autor con el nombre dado
+     */
     public Author(String name){
         this.name = name;
         this.books = new ArrayList<>();
     }
+
+    /**
+     * Getter de nombre
+     * @return String name
+     * devuelve el nombre del autor
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * toString
+     * @return String tostring
+     * devuelve un string con el nombre del autor y sus libros
+     */
     public String toString(){
         String s = this.name;
         if(this.books.size() == 0){
@@ -30,18 +46,40 @@ public class Author implements Serializable{
         return s;
     }
     
+    /**
+     * Getter de cantidad de libros
+     * @return int books size
+     * devuelve la cantidad de libros del autor
+     */
     public int getBookAmount(){
-	return this.books.size();
+        return this.books.size();
     }
-
+    
+    /**
+     * Getter de libros
+     * @return ArrayList
+     * devuelve los libros del autor
+     */
     public ArrayList<Book> getBooks(){
         return this.books;
     }
 
+    /**
+     * addBook
+     * @param b libro
+     * agrega un libro al autor
+     */
     public void addBook(Book b){
         this.books.add(b);
     }
 
+    /**
+     * equals
+     * @param array array de autores
+     * @return boolean exists
+     * retorna true si el autor existe en el arraylist
+     * retorna false si el autor no existe en el arraylist
+     */
     public boolean exists(ArrayList<Author> array){
         boolean exists = false;
         for(int i = 0; i < array.size(); i++){
@@ -52,6 +90,12 @@ public class Author implements Serializable{
         return exists;
     }
 
+    /**
+     * getIndexIn
+     * @param array array de autores
+     * @return int index
+     * retorna el indice del autor en el arraylist
+     */
     public int getIndexIn(ArrayList<Author> array){
         int index = -1;
         for(Author a : array){
@@ -61,10 +105,21 @@ public class Author implements Serializable{
         }
         return index;
     }
+
+    /**
+     * setName
+     * @param name nombre del autor
+     * cambia el nombre del autor
+     */
     public void setName(String name){
         this.name = name;
     }
-
+    
+    /**
+     * rmBook
+     * @param b libro
+     * borra un libro del autor
+     */
     public void rmBook(Book b){
        if(b.exists(this.books)){
         this.books.remove(b.getIndexIn(this.books));

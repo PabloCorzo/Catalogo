@@ -15,7 +15,11 @@ public class Interface implements Serializable{
     private ArrayList<Book>library;
     private ArrayList<Author>authors;
 
-    
+	/**
+	 * Constructor
+	 * construye una interfaz con una lista de libros y una lista de autores
+	 * lee los libros y autores guardados en los archivos books.txt y authors.txt
+	*/ 
     public Interface(){
         this.library = new ArrayList<>();
         this.authors = new ArrayList<>();
@@ -49,11 +53,19 @@ public class Interface implements Serializable{
         }
     }
 
+	/**
+	 * Cierra el scanner para borrarlo de la memoria
+	 */
     public void closeScanner(){
         this.sc.close();
     }
 
-
+	/**
+	 * 
+	 * @param prompt pregunta que mostrar
+	 * @return String input
+	 * Muestra la pregunta y retorna la respuesta
+	 */
 	public String getInput(String prompt){
     	System.out.println(prompt);
 		String input = sc.nextLine();
@@ -61,14 +73,16 @@ public class Interface implements Serializable{
     }
 
 
+	/**
+	 * 
+	 * @param input orden a realizar
+	 * @return int resultado
+	 * Ejecuta el metodo correspondiente al input
+	 * retorna 1 si la aplicacion no se ha cerrado 
+	 * retorna 0 si el input es salir
+	 */
     public int chooseMethod(String input){
 	String[] split = input.split(" ");
-	//METHODS
-	//ADD -> BOOK, AUTHOR
-	//REMOVE -> BOOK, AUTHOR(DELETES ALL OF THEIR BOOKS, NEEDS Y/N)
-	//EDIT -> BOOK, AUTHOR -> ANY OF THEIR RESPECTIVE ATRIBUTES
-	//SHOW -> BY GENRE(SUBCLASS) OR BY AUTHOR
-	//HELP AND EXIT
 	if(split[0].equalsIgnoreCase("agregar") && split[1].equalsIgnoreCase("libro")){
 		//add book
 		String name = this.getInput("Nombre del libro:");
@@ -132,22 +146,17 @@ public class Interface implements Serializable{
 		else if(genre.equalsIgnoreCase("3")){
 			//add biography book
 			String subject = this.getInput("Sujeto del libro:");
-			String isselfwritten = this.getInput("Es autoescrito? y/n");
-			if(isselfwritten.equalsIgnoreCase("y")){
+			if(subject.equalsIgnoreCase(author)){
 				Biography b = new Biography(name,a,date,pages,subject,true);
 				library.add(b);
 				authors.get(a.getIndexIn(authors)).addBook(b);
 				System.out.println("Libro agregado.");
 			}
-			else if(isselfwritten.equalsIgnoreCase("n")){
+			else{
 				Biography b = new Biography(name,a,date,pages,subject,false);
 				library.add(b);
 				authors.get(a.getIndexIn(authors)).addBook(b);
 				System.out.println("Libro agregado.");
-			}
-
-			else{
-				System.out.println("No se ha reconocido la respuesta.");
 			}
 		}
 		else if(genre.equalsIgnoreCase("4")){
@@ -451,6 +460,19 @@ public class Interface implements Serializable{
 		}
 		return 1;
 	}
+	else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("libro")){
+		//show book
+		String name = this.getInput("Que libro quieres ver?");
+		Book book = new Book(name,new Author(""),"","");
+		if(book.exists(library)){
+			int index = book.getIndexIn(library);
+			System.out.println(library.get(index).toString());
+		}
+		else{
+			System.out.println("Libro no encontrado.");
+		}
+		return 1;
+	}
 	else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("libros")){
 		//show all book sublasses, with the option to choose one to show its designated books
 		System.out.println("Categorias: \n1. Filosofia\n2. Narrativa\n3. Biografia\n4. Comic");
@@ -539,7 +561,7 @@ else if(split[0].equalsIgnoreCase("mostrar") && split[1].equalsIgnoreCase("autor
 else if(split[0].equalsIgnoreCase("help") || split[0].equalsIgnoreCase("ayuda")){
 	//help
 	//show all commands
-	System.out.println("Comandos: \n1. Agregar libro\n2. Agregar autor\n3. Borrar libro\n4. Borrar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar autores\n9. Ayuda\n10. Salir");
+	System.out.println("Comandos: \n1. Agregar libro\n2. Agregar autor\n3. Borrar libro\n4. Borrar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar libro\n9. Mostrar autores\n10. Ayuda\n11. Salir");
 	return 1;
 }
 else if(split[0].equalsIgnoreCase("salir") || split[0].equalsIgnoreCase("quit")){
@@ -552,6 +574,11 @@ else{
 	return 1;
 }
 }
+
+	/**
+	 * Guardar
+	 * Serializa los arraylist de autores y libros a sus documentos de texto correspondientes
+	 */
 	public void save(){
 		//serialize library and authors
 		ObjectOutputStream obj;
