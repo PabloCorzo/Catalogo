@@ -9,6 +9,7 @@ public class Main{
      * Metodo main
      * Empieza un bucle de preguntas para ejecutar el input
      * Solo termina si el input es salir. si no, se llama a si mismo
+     * @param args sin uso
      */
     public static void main(String[] args){
     String input = i.getInput("que desea hacer?");
