@@ -533,7 +533,7 @@ public class Interface implements Serializable{
      * Muestra un menu de comandos
      */
     public void help(){
-        System.out.println("Que desea hacer?\n1. Agregar libro\n2. Agregar autor\n3. Eliminar libro\n4. Eliminar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar autores\n9. Mostrar libros por tipo\n10. Mostrar libro especifico\n11. Guardar y salir");
+        System.out.println("Que desea hacer?\n1. Agregar libro\n2. Agregar autor\n3. Eliminar libro\n4. Eliminar autor\n5. Editar libro\n6. Editar autor\n7. Mostrar libros\n8. Mostrar autores\n9. Mostrar libros por tipo\n10. Mostrar libro especifico\n11. Guardar y salir\n12. Ayuda");
     }
     public void save(){
 		//serialize library and authors
@@ -615,6 +615,9 @@ public class Interface implements Serializable{
             this.save();
             this.closeScanner();
             return 0;
+        }
+        else if(input.equals("12")){
+            this.help();
         }
         else{
             System.out.println("Valor no valido.");
