@@ -129,4 +129,33 @@ public class Author implements Serializable{
         System.out.println("No se ha encontrado el libro.");
        }
     }
+
+    /**
+     * equals
+     * @param a autor
+     * @param a2 autor
+     * @return boolean equals
+     * retorna true si los autores son iguales
+     * retorna false si los autores no son iguales
+     */
+    public boolean equals(Author a, Author a2){
+        return this.name.equalsIgnoreCase(a.getName());
+    }
+
+    /**
+     * equals
+     * @param a autor
+     * @return boolean equals
+     * retorna true si los autores son iguales
+     * retorna false si los autores no son iguales
+     */
+    public boolean equals(Object a){
+        if(a instanceof Author){
+            Author a2 = (Author) a;
+            return this.name.equalsIgnoreCase(a2.getName());
+        }
+        else{
+            return false;
+        }
+    }
 }

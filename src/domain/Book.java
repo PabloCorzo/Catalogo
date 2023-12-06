@@ -30,6 +30,17 @@ public class Book implements Serializable{
     }
 
     /**
+     * Constructor
+     * @param name nombre
+     * construye un libro con los parametros dados
+     */
+    public Book(String name){
+        this.name = name;
+        this.date = "N/A";
+        this.pages = "N/A";
+    }
+
+    /**
      * Setter de nombre
      * @param name nombre
      * cambia el nombre del libro
@@ -153,4 +164,30 @@ public class Book implements Serializable{
         return this.name + ", escrito por " + this.author.getName() + " en " + this.date + " tiene " + this.pages + " paginas.";
     }
 
+    /**
+     * equals
+     * @param b libro
+     * @param b2 libro
+     * @return boolean equals
+     * retorna true si los libros son iguales
+     * retorna false si los libros no son iguales
+     */
+    public boolean equals(Book b, Book b2){
+        return this.name.equalsIgnoreCase(b.getName());
+    }
+
+    /**
+     * equals
+     * @param b libro
+     * @return boolean equals
+     * retorna true si los libros son iguales
+     * retorna false si los libros no son iguales
+     */
+    public boolean equals(Object b){
+        if(b instanceof Book){
+            Book b2 = (Book) b;
+            return this.name.equalsIgnoreCase(b2.getName());
+        }
+        return false; 
+    }
 }

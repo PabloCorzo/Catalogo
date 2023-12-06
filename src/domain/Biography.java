@@ -56,11 +56,10 @@ public class Biography extends Book{
      */
     public String getSelfWritten(){
         if(this.selfwritten){
-            return "es autobiográfico";
+            return " es autobiográfico ";
         }
         else{
-            //Returns empty String because author will be shown by another method
-            return "";
+            return " sobre " + this.getSubject() + " ";
         }
     }
 
